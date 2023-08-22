@@ -8,15 +8,18 @@ const app = express()
 
 client.connect(err=>{
   const collection = client.db('organicdb').collection('produc')
+  app.post('/adproduc',(req,res)=>{
+    collection.insertOne(student)
+    .then(res=>{
+     console.log('one product add')
+    })
+  })
   console.log('hello world')
   const student = {name:'farhad',age: 20}
-  collection.insertOne(student)
-  .then(res=>{
-   console.log('one product add')
-  })
+  
  
 })
 app.get('/',(req,res)=>{
-    res.send('hello world')
+    res.sendFile(__dirname + "/index.html")
 })
 app.listen(4200)
