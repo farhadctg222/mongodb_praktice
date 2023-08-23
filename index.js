@@ -18,10 +18,20 @@ app.get('/',(req,res)=>{
 client.connect(err=>{
   const productCollection = client.db('organicdb').collection('produc')
 
+
+
+
   app.get('/product',(req,res)=>{
     productCollection.find({})
     .toArray((err,document)=>{
       res.send(document)
+    })
+  })
+  app.get('/product/:id',(req,res)=>{
+    productCollection.find({_id: ObjectId(req.params.id)})
+    .toArray((err,document)=>{
+      res.send(document[0])
+     
     })
   })
 
@@ -36,9 +46,18 @@ client.connect(err=>{
   app.delete('/delete/:id',(req,res)=>{
     productCollection.deleteOne({_id: ObjectId(req.params.id)})
     .then((result)=>{
-      console.log(result)
+   res.send()
     })
   })
-})
+  app.get('/product/:id',(req,res)=>{
+   productCollection.find({_id: ObjectId(id.prams.id)})
+   toArray((err,result)=>{
+   res.send(document)
+   })
+  })
+  
+  
+  })
+
 
 app.listen(3000)

@@ -8,24 +8,33 @@
 </head>
 <body>
     <h1>hi finnaly i got mongodb connect</h1>
-    <form action="/adproduct" method="post" class="form-control">
-        <input type="text" name="produc" id="" placeholder="Your Full Name"class="form-control">
-        <input type="text" name="proce" id="" placeholder="Email"class="form-control"><br>
+    <form action="/adproduct" method="post">
+        <input type="text" name="name" id="" placeholder="Your Full Name"class="form-control"><br>
+        <input type="number" name="mobile" id="" placeholder="mobile"class="form-control"><br>
+        <input type="text" name="email" id="" placeholder="Email"class="form-control"><br>
         <button type="submit">submit</button>
 
     </form>
-    <div id="para" style="position: absolute;top: 300px;" ></div>
+    <div id="para" style="border: 1px solid black;"></div>
+    <div id="update">
+        <h1>update</h1>
+        
+    </div>
     <script>
+       
         fetch('/product')
         .then(res=>res.json())
        .then(data =>{
         const container = document.getElementById('para')
         data.forEach(element => {
             const ss = document.createElement('p')
-            ss.innerHTML =` <strong>${element.produc}</strong> price :${element.proce} ${element.name}<button onclick="delect('${element._id}')">delect</button>`
+            ss.innerHTML =`Youre Name is :  <strong>${element.name}</strong> Your Email :<strong>${element.email}</strong> Mobile: <strong>${element.mobile}</strong><button onclick="delect('${element._id}')">delect</button><button onclick="loadProducs('${element._id}')">update</button>`
             container.appendChild(ss)
         });
        })
+    
+  
+
        function delect(id){
        console.log(id)
         fetch(`/delete/${id}`,{
@@ -36,6 +45,29 @@
             console.log(data)
         })
        }
+     function loadProducs(id){
+        fetch(`product/${id}`)
+        .then(res=>res.json())
+        .then(data=>{
+            const update = document.getElementById('update')
+            update.innerHTML = `<h1>Update: ${data._id}</h1>
+                               <h1>${data.name}</h1>
+                               Email :  <input type="text" name="email" id="email" value="${data.email}">
+                               Mobile :  <input type="number" name="mobile" id="mobile" value="${data.mobile}">
+                               <button onclick="updateData('${data._id}')">submit</button>`
+        })
+     }
+    
+      function updateData(id){
+        const email = document.getElementById('email').value
+        const mobile = document.getElementById('mobile').value
+        const product = {email,mobile}
+        console.log(product)
+       fetch(`)
+      }
+    
+        
+      
     </script>
 </body>
 </html>
