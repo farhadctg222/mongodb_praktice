@@ -4,22 +4,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Document</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@3.3.7/dist/css/bootstrap.min.css" 
 </head>
 <body>
     <h1>hi finnaly i got mongodb connect</h1>
-    <form action="/adproduct" method="post">
-        <input type="text" name="produc" id="" placeholder="product name">
-        <input type="text" name="proce" id="" placeholder="price">
-        <input type="text" name="name" id="" placeholder="quantitiy">
+    <form action="/adproduct" method="post" class="form-control">
+        <input type="text" name="produc" id="" placeholder="Your Full Name"class="form-control">
+        <input type="text" name="proce" id="" placeholder="Email"class="form-control"><br>
+        <input type="password" name="name" id="" placeholder="password"class="form-control"><br>
+        <input type="password" name="name" id="" placeholder="confirm-password"class="form-control"><br>
         <button type="submit">submit</button>
 
     </form>
-    <!-- <script>
-        fetch('http://localhost:4200/products')
+    <div id="para" style="display: flex;position: absolute;top: 300px;"></div>
+    <script>
+        fetch('/product')
         .then(res=>res.json())
        .then(data =>{
-        console.log(data)
+        const container = document.getElementById('para')
+        data.forEach(element => {
+            const ss = document.createElement('p')
+            ss.innerHTML =` <h1>${element.produc}</h1><h1>${element.proce}<h1>${element.
+name}</h1></h1> `
+            container.appendChild(ss)
+        });
        })
-    </script> -->
+    </script>
 </body>
 </html>
