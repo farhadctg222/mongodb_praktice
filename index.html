@@ -11,12 +11,10 @@
     <form action="/adproduct" method="post" class="form-control">
         <input type="text" name="produc" id="" placeholder="Your Full Name"class="form-control">
         <input type="text" name="proce" id="" placeholder="Email"class="form-control"><br>
-        <input type="password" name="name" id="" placeholder="password"class="form-control"><br>
-        <input type="password" name="name" id="" placeholder="confirm-password"class="form-control"><br>
         <button type="submit">submit</button>
 
     </form>
-    <div id="para" style="display: flex;position: absolute;top: 300px;"></div>
+    <div id="para" style="position: absolute;top: 300px;" ></div>
     <script>
         fetch('/product')
         .then(res=>res.json())
@@ -24,11 +22,20 @@
         const container = document.getElementById('para')
         data.forEach(element => {
             const ss = document.createElement('p')
-            ss.innerHTML =` <h1>${element.produc}</h1><h1>${element.proce}<h1>${element.
-name}</h1></h1> `
+            ss.innerHTML =` <strong>${element.produc}</strong> price :${element.proce} ${element.name}<button onclick="delect('${element._id}')">delect</button>`
             container.appendChild(ss)
         });
        })
+       function delect(id){
+       console.log(id)
+        fetch(`/delete/${id}`,{
+            method: 'DELETE'
+        })
+        .then(res=> res.json())
+        .then(data =>{
+            console.log(data)
+        })
+       }
     </script>
 </body>
 </html>

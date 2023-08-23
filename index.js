@@ -5,6 +5,7 @@ const passwor = "a4i6k1tiUYFJPVRT"
 const {MongoClient } = require('mongodb');
 const uri = "mongodb+srv://organicUser:a4i6k1tiUYFJPVRT@addnewuser.kllk4y5.mongodb.net/organicdb?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {useNewUrlParser: true,useUnifiedTopology: true});
+const ObjectId = require('mongodb').ObjectId
 const app = express()
 app.use(bodyParser.json())
 app.use(bodyParser.urlencoded({extended:false}))
@@ -30,6 +31,12 @@ client.connect(err=>{
     .then(result=>{
       console.log(result.ops)
       res.send('success')
+    })
+  })
+  app.delete('/delete/:id',(req,res)=>{
+    productCollection.deleteOne({_id: ObjectId(req.params.id)})
+    .then((result)=>{
+      console.log(result)
     })
   })
 })
