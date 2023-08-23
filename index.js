@@ -1,25 +1,30 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 const passwor = "a4i6k1tiUYFJPVRT"
 
 const {MongoClient } = require('mongodb');
 const uri = "mongodb+srv://organicUser:a4i6k1tiUYFJPVRT@addnewuser.kllk4y5.mongodb.net/organicdb?retryWrites=true&w=majority";
 const client = new MongoClient(uri, {useNewUrlParser: true,useUnifiedTopology: true});
 const app = express()
+app.use(bodyParser.json())
+app.use(bodyParser.urlencoded({extended:false}))
 
+
+
+app.get('/',(req,res)=>{
+  res.sendFile(__dirname + "/index.html")
+})
 client.connect(err=>{
-  const collection = client.db('organicdb').collection('produc')
-  app.post('/adproduc',(req,res)=>{
-    collection.insertOne(student)
-    .then(res=>{
-     console.log('one product add')
+  const productCollection = client.db('organicdb').collection('produc')
+
+  app.post("/adproduct",(req,res)=>{
+    const product = req.body
+    productCollection.insertOne(product)
+    .then(result=>{
+      console.log(result.ops)
+      res.send('success')
     })
   })
-  console.log('hello world')
-  const student = {name:'farhad',age: 20}
-  
- 
 })
-app.get('/',(req,res)=>{
-    res.sendFile(__dirname + "/index.html")
-})
-app.listen(4200)
+
+app.listen(3000)
