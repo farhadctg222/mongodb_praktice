@@ -21,11 +21,13 @@
         
     </div>
     <script>
-       
+       function loadAllProducts(){
+        
         fetch('/product')
         .then(res=>res.json())
        .then(data =>{
         const container = document.getElementById('para')
+        container.innerHTML = ''
         data.forEach(element => {
             const ss = document.createElement('p')
             ss.innerHTML =`Youre Name is :  <strong>${element.name}</strong> Your Email :<strong>${element.email}</strong> Mobile: <strong>${element.mobile}</strong><button onclick="delect(event,'${element._id}')">delect</button><button onclick="loadProducs('${element._id}')">update</button>`
@@ -33,6 +35,8 @@
         });
        })
     
+       }
+       loadAllProducts()
   
 
        function delect(event,id){
@@ -76,7 +80,12 @@
        })
        .then(res=>res.json())
        .then(data=>{
-        console.log(data)
+        if(data){
+            loadAllProducts()
+            const update = document.getElementById('update').innerHTML = ''
+           
+
+        }
        })
       }
     

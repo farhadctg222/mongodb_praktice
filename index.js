@@ -35,8 +35,8 @@ client.connect(err=>{
     
     )
    
-    .then(res=>{
-      console.log(res)
+    .then(result=>{
+      res.send(result.modifiedCount>0)
     })
   })
   app.get('/product/:id',(req,res)=>{
