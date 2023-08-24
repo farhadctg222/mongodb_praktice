@@ -27,6 +27,18 @@ client.connect(err=>{
       res.send(document)
     })
   })
+  app.patch('/updateData/:id',(req,res)=>{
+    productCollection.updateOne({_id: ObjectId(req.params.id)},
+    {
+      $set:{email: req.body.email,mobile: req.body.mobile}
+    }
+    
+    )
+   
+    .then(res=>{
+      console.log(res)
+    })
+  })
   app.get('/product/:id',(req,res)=>{
     productCollection.find({_id: ObjectId(req.params.id)})
     .toArray((err,document)=>{
@@ -40,13 +52,13 @@ client.connect(err=>{
     productCollection.insertOne(product)
     .then(result=>{
       console.log(result.ops)
-      res.send('success')
+      res.redirect('/')
     })
   })
   app.delete('/delete/:id',(req,res)=>{
     productCollection.deleteOne({_id: ObjectId(req.params.id)})
     .then((result)=>{
-   res.send()
+     res.send(result.deletedCount>0)
     })
   })
   app.get('/product/:id',(req,res)=>{

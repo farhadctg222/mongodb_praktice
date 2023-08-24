@@ -28,21 +28,25 @@
         const container = document.getElementById('para')
         data.forEach(element => {
             const ss = document.createElement('p')
-            ss.innerHTML =`Youre Name is :  <strong>${element.name}</strong> Your Email :<strong>${element.email}</strong> Mobile: <strong>${element.mobile}</strong><button onclick="delect('${element._id}')">delect</button><button onclick="loadProducs('${element._id}')">update</button>`
+            ss.innerHTML =`Youre Name is :  <strong>${element.name}</strong> Your Email :<strong>${element.email}</strong> Mobile: <strong>${element.mobile}</strong><button onclick="delect(event,'${element._id}')">delect</button><button onclick="loadProducs('${element._id}')">update</button>`
             container.appendChild(ss)
         });
        })
     
   
 
-       function delect(id){
-       console.log(id)
+       function delect(event,id){
+        
+      
         fetch(`/delete/${id}`,{
             method: 'DELETE'
         })
         .then(res=> res.json())
         .then(data =>{
-            console.log(data)
+            if(data){
+        event.target.parentNode.style.display="none"
+      }
+    
         })
        }
      function loadProducs(id){
@@ -52,18 +56,28 @@
             const update = document.getElementById('update')
             update.innerHTML = `<h1>Update: ${data._id}</h1>
                                <h1>${data.name}</h1>
-                               Email :  <input type="text" name="email" id="email" value="${data.email}">
-                               Mobile :  <input type="number" name="mobile" id="mobile" value="${data.mobile}">
+                               Email :  <input type="text" name="email" id="email1" value="${data.email}">
+                               Mobile :  <input type="number" name="mobile" id="mobile1" value="${data.mobile}">
                                <button onclick="updateData('${data._id}')">submit</button>`
         })
      }
     
       function updateData(id){
-        const email = document.getElementById('email').value
-        const mobile = document.getElementById('mobile').value
-        const product = {email,mobile}
+        console.log('hid data')
+        console.log(id)
+        const email = document.getElementById('email1').value
+        const mobile = document.getElementById('mobile1').value
+        const product = {id,email,mobile}
         console.log(product)
-       fetch(`)
+       fetch(`/updateData/${id}`,{
+        method: 'PATCH',
+        headers: {'Content-Type': 'application/json'},
+        body: JSON.stringify(product)
+       })
+       .then(res=>res.json())
+       .then(data=>{
+        console.log(data)
+       })
       }
     
         
